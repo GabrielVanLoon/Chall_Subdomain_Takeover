@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Ganesh Travelers - Blog de Viagens do Ganesh</title>
+	<meta name="description" content="Ganesh Travelers">
+	<link rel="shortcut icon" href="favicon.ico"> 
+
+	<!-- FontAwesome JS-->
+	<script defer src="https://use.fontawesome.com/releases/v5.7.1/js/all.js" integrity="sha384-eVEQC9zshBn0rFj4+TU78eNA19HMNigMviK/PU/FFjLXqa/GKPgX58rvt5Z8PLs7" crossorigin="anonymous"></script>
+	
+	<!-- Theme CSS -->  
+	<link id="theme-style" rel="stylesheet" href="/assets/style.css">
+</head> 
+
+<body>
+    
+    <header class="header text-center">	    
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="/">Ganesh@Travelers:~</a></h1>
+        
+	    <nav class="navbar navbar-expand-lg navbar-dark" >
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				<div class="profile-section pt-3 pt-lg-0">
+				    <img class="profile-image mb-3 mx-auto" src="/assets/GaneshLogo300x300.png" alt="image" >			
+					<div class="bio mb-3">Blog criado para os membros do Ganesh divulgarem dicas de viagens, atividades e seus hobbies! </div><!--//bio-->
+			        <hr> 
+					<form id="visitform" method="GET">
+						<div class="input-group mb-3">
+							<input type="text" id="target" name="target" placeholder="Compartilhar Link"  class="form-control" id="nomeInput">
+							<button type="submit" class="btn btn-primary">Enviar</button>
+						</div>
+					</form>
+					<hr> 
+				</div><!--//profile-section-->
+				<div class="my-2 my-md-3">
+				    <a class="btn btn-primary" href="https://ganesh.icmc.usp.br/" target="_blank">Seja um Membro!</a>
+				</div>
+			</div>
+		</nav>
+    </header>
+    
+    <div class="main-wrapper">
+	    
+	    <article class="blog-post px-3 py-5 p-md-5">
+		    <div class="container">
+			    <header class="blog-post-header">
+				    <h2 class="title mb-2">Capitólio - Minas Gerais <br/>((Diário do Ganesher Viajante Ep. 7))</h2>
+				    <div class="meta mb-3"><span class="date">Publicado 2 dias atrás</span><span class="comment"><a href="#">2 comentários</a></span></div>
+			    </header>
+			    
+			    <div class="blog-post-body">
+				    <figure class="blog-banner">
+				        <img class="img-fluid" src="/assets/images/blog-banner.jpg" alt="image">
+				    </figure>
+				    
+					<p>Saudades de viajar na pandemia? Então nesse artigo irei te apresentar um dos melhoros pontos de ecoturismo 
+						desse Brasil e dar algumas dicas das melhores cachoeiras, trilhas e atividades que podem ser feitas
+						durante um final de semana neste paraíso.</p>
+					
+					<h3 class="mt-5 mb-3">Dica 1 - Passeio de Lancha</h3>
+					<figure class="blog-banner">
+						<img class="img-fluid" src="/assets/images/blog-banner-2.jpg" alt="image">
+					</figure>
+				    
+					<p>A primeira dica que eu irei dar é a de deixar preparado um passeio de lancha de antemão a fim de conseguir 
+						passear pelo famoso Lago de Furnas que é uma das principais atrações do local. </p>
+					<p>Durante o passeio solicite
+						que o piloto deixe preparado coletes salva-vidas pois em muitos trechos será possível nadar e acessar as
+						diversas cachoeiras e cânions nadando (sério mesmo!). O passeio pode durar até 2 horas e não é muito caro 
+						se feito em grupos de 8 pessoas.</p>
+					
+					<h3 class="mt-5 mb-3">Dica 2 - Trilhas e Cachoeiras</h3>
+					<figure class="blog-banner">
+						<img class="img-fluid" src="/assets/images/blog-banner-3.jpg" alt="image">
+					</figure>
+					<p>A segunda dica é a de deixar mapeado todas as trilhas e cachoeiras que se deseja visitar a fim de otimizar 
+						otimizar o tempo. Capitólio consta com uma ENORME quantidade de trilhas de diferente dificuldades, seja você
+						um aventureiro de primeira viagem ou alguem que curte se aventurar em altos declives.</p>
+				    
+					<p>Outro ponto importante é que grande parte das trilhas atravessam ou terminam nas muitas cachoeiras e rios que 
+						existem na região, e são locais perfeitos para descansar por 30~45 minutos e curtir as piscinas naturais com 
+						águas cristalinas e peixes.</p>
+			    </div>
+				
+				<div class="blog-comments-section">
+					<h3 class="mt-5 mb-3">Comentários</h3>
+					
+					<div class="post-comment mb-3">
+						<h6>Usuário Anônimo</h6>
+						<div class="meta"><span class="date">Publicado 1 dia atrás</span></div>
+						<p>Adorei as dicas pessoal, vou adicionar esse destino para meu próximo verão!</p>
+					</div>
+
+
+					<% if(nome || comentario){ %>
+						<div class="post-comment mb-3">
+							<h6><%= nome %></h6>
+							<div class="meta"><span class="date">Publicado hoje</span></div>
+							<p><%= comentario %>. Este não é um chall <span style="display: none;">apenas</span> de XSS muahahaha!</p>
+						</div>
+					 <% } %>
+					
+					<form method="GET" style="border: solid 1px #ccc; border-radius: 3px; margin: 0 auto; padding: 20px; ">
+						<div class="mb-3">
+						  <label for="nomeInput" class="form-label">Nome</label>
+						  <input type="text" name="nome" class="form-control" id="nomeInput">
+						</div>
+						<div class="mb-3">
+							<label for="commentInput" class="form-label">Comentário</label>
+							<input type="text" name="comentario" class="form-control" id="commentInput">
+						</div>
+						<button type="submit" class="btn btn-primary">Enviar Comentário</button>
+					</form>
+				</div><!--//blog-comments-section-->
+			
+		    </div><!--//container-->
+	    </article>
+	    
+	    <footer class="footer text-center py-2 theme-bg-dark">
+	        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+            <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+	    </footer>
+    
+    </div><!--//main-wrapper-->
+    
+    <!-- Javascript -->          
+    <script src="/assets/plugins/jquery-3.3.1.min.js"></script>
+    <script src="/assets/plugins/popper.min.js"></script> 
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script> 
+	<script src="/assets/form.js"></script> 
+
+</body>
+</html> 
+
