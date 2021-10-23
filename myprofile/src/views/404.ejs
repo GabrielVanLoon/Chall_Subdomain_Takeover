@@ -48,29 +48,17 @@
             <div class="navbar-nav">
                 <a class="nav-item active">Free and Custom Landing Page 4 Everyone!</a>
             </div>
-        </div>
-        <div class="navbar-nav ms-auto">
-            <a href="/logout" class="nav-item nav-link">Logout</a>
+            <!-- <div class="navbar-nav ms-auto">
+                <a href="#" class="nav-item nav-link">Login</a>
+            </div> -->
         </div>
     </div>
 </nav>
 
 <div class="login-form">
-    <form method="post">
-        <h2 class="text-center">Edit Landing Page</h2>       
-        <div class="form-group">
-            <input type="text" class="form-control" name="domain" placeholder="Custom Domain (ex: my.personal.website.com" value="<%= domain %>">
-            <small>Obs: we do not perform any domain verification (be careful)!</small>
-        </div>
-        <div class="form-group">
-            <textarea rows="10" class="form-control" name="content" placeholder="Landingpage HTML Content" wrap="hard"><%= content %></textarea>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block">Update Landingpage</button>
-        </div>
-        <div class="clearfix">
-            <a href="/view/<%= username %>" class="float-right">View Landing Page!</a>
-        </div>        
+    <form>
+        <h2 class="text-center">404 ~ Not Found</h2>
+        <p class="text-center">Go to the <a href="/login">login page</a></p>
     </form>
 </div>
 </body>

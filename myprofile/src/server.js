@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken');
 const jwt_secret = require('crypto').randomBytes(64).toString('hex')
 const cookieConfigs = { maxAge: 600000, httpOnly: true, secure: false }
 
-
 function generateAccessToken(userObject) {
     return jwt.sign(userObject, jwt_secret, { expiresIn: '600s' });
 }
@@ -17,16 +16,19 @@ function authToken(req, res, next) {
     const token = req.cookies?.auth
 
     if(!token)
-        return res.sendStatus(401)
+        return res.redirect('/login')
     
     try {
         req.user = jwt.verify(token, jwt_secret)
         next()
     } catch(err) {
         console.error(`Error on jwt auth: ${err}`)
-        return res.sendStatus(401)
+        return res.redirect('/login')
     }
 }
+
+// Database configurations
+const { db } = require('./db')
 
 // Starting Express and Midlewares
 const app = express();
@@ -41,7 +43,10 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.get('/validate', authToken, function(req, res) {
-    return res.send(`Welcome ${req.user.username}!`)
+    db.all("SELECT * FROM users", function(err, rows) {
+        console.log(rows);
+        return res.send(`Welcome ${req.user.username}!`)
+    });
 })
 
 app.get('/login', function(req, res) {
@@ -55,11 +60,36 @@ app.post('/login', function(req, res) {
     if(!username || !password)
         return res.redirect('/login?err=Username+and+Password+Required')
 
-    if(username.length < 3 || username.length > 20)
+    if(username.length < 3 || username.length > 20 || !username.match(/^[a-zA-Z0-9]{3,20}$/))
         return res.redirect('/login?err=Username+invalid')
 
-    res.cookie('auth', generateAccessToken({ username }), cookieConfigs)
-    return res.redirect('/my-profile')
+    db.get('SELECT username, password FROM users WHERE username=?;', [username], (err, row) => {
+        if(err) {
+            console.error(`Login SELECT Error ${err}`);
+            return res.redirect('/login?err=Unexpected+Error+lol')
+        }
+
+        // Register new user
+        if(row === undefined){
+            db.run("INSERT INTO users VALUES (?,?,'','')", [username,password], (err) => { 
+                if(err) {
+                    console.error(`Login INSERT Error ${err}`);
+                    return res.redirect('/login?err=Unexpected+Error+lol')
+                }    
+                res.cookie('auth', generateAccessToken({ username }), cookieConfigs)
+                return res.redirect('/my-profile')
+            });
+        
+        // Invalid Password
+        } else if(password !== row.password) {
+            return res.redirect('/login?err=Username+or+Password+invalid')
+        
+        // User and password correct :)
+        } else {
+            res.cookie('auth', generateAccessToken({ username }), cookieConfigs)
+            return res.redirect('/my-profile')
+        }
+    })
 })
 
 app.get('/logout', function(req, res) { 
@@ -67,11 +97,54 @@ app.get('/logout', function(req, res) {
     return res.redirect('/login')
 })
 
-app.get('/my-profile', function(req, res){
-    return res.render('edit-page');
+app.get('/my-profile',  authToken, function(req, res){
+    db.get('SELECT username, domain, content FROM users WHERE username=?;', [req.user.username], (err, row) => {
+        if(err) {
+            console.error(`My-profile SELECT Error ${err}`);
+            return res.redirect('/login?err=Unexpected+Error+lol')
+        }
+        return res.render('edit-page', { username: req.user.username, domain: row.domain, content: row.content });
+    })
 })
 
+app.post('/my-profile',  authToken, function(req, res){
+    const domain = req.body?.domain || ""
+    const content = req.body?.content || ""
 
+    if(content !== undefined && typeof(content) !== "string")
+        return res.redirect('/my-profile?err=Invalid+content+type!')
+    else if(content !== undefined && content.length > 10000)
+        return res.redirect('/my-profile?err=Content+max+length+is+10000+chars')
+
+    db.run('UPDATE users SET domain=?, content=? WHERE username=?;', [domain, content, req.user.username], (err, row) => {
+        if(err) {
+            console.error(`My-profile UPDATE Error ${err}`);
+            return res.redirect('/my-profile?err=Error+on+update')
+        }
+        return res.redirect('/my-profile')
+    })
+})
+
+app.get('/view/:username', function(req, res){
+    const username = req.params.username
+    db.get('SELECT domain, content FROM users WHERE username=?;', [username], (err, row) => {
+        if(err || row === undefined) {
+            return res.status(404).render('404')
+        }
+        return res.render('profile', { domain: row.domain, content: row.content });
+    })
+})
+
+app.get('vanloon', function(req, res){
+    return res.render('vanloon');
+})
+
+app.use(function(req, res){
+    return res.status(404).render('404')
+})
 
 // Starting Express Server
 app.listen(process.env.SERVER_PORT || 3333, '0.0.0.0');
+
+// Autokill timeout :c
+setTimeout(function(){ process.exit(0) }, 10*60*1000)
