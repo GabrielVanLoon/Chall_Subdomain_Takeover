@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs')
+const { config } = require('./config')
 
 async function visit(url) {
 	const browser = await puppeteer.launch({ args: ['--no-sandbox']})
@@ -7,9 +8,11 @@ async function visit(url) {
     var page = await browser.newPage()
 	await page.setCookie({
 		name: 'flag',
-		value: process.env.FLAG || 'flag{admin_s3cr3t}',
-		domain: process.env.SERVER_DOMAIN || 'localhost',
-		samesite: 'strict'
+		value: config.FLAG,
+		domain: config.SERVER_BLOG_HOSTNAME,
+		samesite: 'lax',
+		httpOnly: false,
+		secure: false,
 	})
 	await page.goto(url)
 
