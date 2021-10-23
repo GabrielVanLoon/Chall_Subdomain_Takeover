@@ -1,7 +1,6 @@
-require('dotenv').config()
-
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const { config } = require('./config')
 
 // Auth Functions
 const jwt = require('jsonwebtoken');
@@ -42,11 +41,19 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/validate', authToken, function(req, res) {
-    db.all("SELECT * FROM users", function(err, rows) {
-        console.log(rows);
-        return res.send(`Welcome ${req.user.username}!`)
-    });
+// Middleware to custom domains
+app.use(function(req, res, next){
+    // Obs: hostname pega o valor do header Host ignorando a porta :)
+    if(req.hostname !== config.SERVER_MYPROFILE_HOSTNAME){
+        db.get('SELECT content FROM users WHERE domain=?;', [req.hostname], (err, row) => {
+            if(err || row === undefined) {
+                return res.status(404).render('404')
+            }
+            return res.render('profile', { content: row.content });
+        })
+    } else {
+        next()
+    }
 })
 
 app.get('/login', function(req, res) {
@@ -144,7 +151,7 @@ app.use(function(req, res){
 })
 
 // Starting Express Server
-app.listen(process.env.SERVER_PORT || 3333, '0.0.0.0');
+app.listen(config.SERVER_PORT, '0.0.0.0');
 
 // Autokill timeout :c
 setTimeout(function(){ process.exit(0) }, 10*60*1000)
