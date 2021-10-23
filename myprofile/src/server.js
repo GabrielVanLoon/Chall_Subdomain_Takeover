@@ -113,8 +113,8 @@ app.post('/my-profile',  authToken, function(req, res){
 
     if(content !== undefined && typeof(content) !== "string")
         return res.redirect('/my-profile?err=Invalid+content+type!')
-    else if(content !== undefined && content.length > 10000)
-        return res.redirect('/my-profile?err=Content+max+length+is+10000+chars')
+    else if(content !== undefined && content.length > 3000)
+        return res.redirect('/my-profile?err=Content+max+length+is+3000+chars')
 
     db.run('UPDATE users SET domain=?, content=? WHERE username=?;', [domain, content, req.user.username], (err, row) => {
         if(err) {
@@ -135,8 +135,8 @@ app.get('/view/:username', function(req, res){
     })
 })
 
-app.get('vanloon', function(req, res){
-    return res.render('vanloon');
+app.get('/vanloon', function(req, res){
+    return res.render('author_van');
 })
 
 app.use(function(req, res){
