@@ -5,7 +5,7 @@ const { config } = require('./config')
 async function visit(url) {
 	console.log(`visit() ~ lauching browser...`)
 	const browser = await puppeteer.launch({ 
-		executablePath: '/usr/bin/google-chrome-stable', // Find exec path with "$ which google-chrome-stable"
+		// executablePath: '/usr/bin/google-chrome-stable', // Find exec path with "$ which google-chrome-stable"
 		headless: true, 
 		timeout: 5000, 
 		args: ['--no-sandbox']

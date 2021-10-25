@@ -8,8 +8,6 @@ services:
     restart: unless-stopped
     expose: 
       - 3333
-    ports:
-      - 3333:3333
   
   myprofile:
     container_name: chall-myprofile-webapp
@@ -25,7 +23,7 @@ services:
       context: ./nginx
     restart: unless-stopped
     ports: 
-      - 80:80
+      - 8001:80
     depends_on:
       - blog
       - myprofile
