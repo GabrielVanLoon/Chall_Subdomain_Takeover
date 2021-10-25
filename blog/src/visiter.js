@@ -18,8 +18,7 @@ async function visit(url) {
 	await page.setCookie({
 		name: 'flag',
 		value: config.FLAG,
-		domain: config.SERVER_BLOG_HOSTNAME,
-		samesite: 'lax',
+		domain: `.${config.SERVER_BLOG_HOSTNAME}`,
 		httpOnly: false,
 		secure: false,
 	})
