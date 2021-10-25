@@ -18,3 +18,15 @@ services:
     restart: unless-stopped
     expose: 
       - 3333
+
+  nginx:
+    container_name: chall-nginx
+    build:
+      context: ./nginx
+    restart: unless-stopped
+    ports: 
+      - 80:80
+    depends_on:
+      - blog
+      - myprofile
+    #./nginx/nginx-conf:/etc/nginx/conf.d

@@ -35,19 +35,27 @@ app.get('/', function(req, res) {
 
 // Ask Admin to visit the url
 app.post('/visit', async function(req, res) { 
+
+    console.log(`at /visit ~ POST with param: ${req.body.target}`)
     const targetUrl = req.body.target 
     const validHostnames =  config.SERVER_BLOG_SUBDOMAINS.map((sub) => `http://${sub ? `${sub}.` : ''}${config.SERVER_BLOG_HOSTNAME}`)
     
     // Allow admin to visit only domains and subdomains listed above
-    if(typeof(targetUrl) !== "string"){
-        return res.status(400).json({'message': 'Erro: Envie uma URL para o administrador >:('})
-    } else if (targetUrl.indexOf('@') !== -1 ){
-        return res.status(400).json({'message': 'Erro: Nada de gracinhas com o caracter @ >:('})
-    } else if(!validHostnames.some((origin) => targetUrl.startsWith(origin))) {
-        return res.status(400).json({'message': 'Erro: Reporte erros apenas de páginas do blog >:('})
+    // if(typeof(targetUrl) !== "string"){
+    //     return res.status(400).json({'message': 'Erro: Envie uma URL para o administrador >:('})
+    // } else if (targetUrl.indexOf('@') !== -1 ){
+    //     return res.status(400).json({'message': 'Erro: Nada de gracinhas com o caracter @ >:('})
+    // } else if(!validHostnames.some((origin) => targetUrl.startsWith(origin))) {
+    //     return res.status(400).json({'message': 'Erro: Reporte erros apenas de páginas do blog >:('})
+    // }
+    
+    try{
+        console.log(`at /visit ~ calling visiter.visit(${targetUrl})`)
+        await visiter.visit(targetUrl);
+    } catch(e){
+        console.log(`at /visit ~ Error ${e}`)
     }
-
-    await visiter.visit(targetUrl);
+    
     return res.json({'message': 'Link enviado ao administrador!'})
 })
 

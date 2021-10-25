@@ -1,8 +1,9 @@
 FROM nginx
-WORKDIR /etc
 
-#RUN apt update && apt upgrade -y && apt install -y nginx
-RUN rm -f nginx/nginx.conf
-COPY nginx.conf nginx/nginx.conf
+RUN rm -f /etc/nginx/nginx.conf
 
-RUN service nginx restart
+COPY ./nginx-conf/default.conf /etc/nginx/nginx.conf
+
+# CMD service nginx start
+
+# ./nginx/nginx-conf:/etc/nginx/conf.d

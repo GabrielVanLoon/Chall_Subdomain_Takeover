@@ -6,8 +6,8 @@ COPY src /app
 
 WORKDIR /app
 
-RUN npm install
+RUN npm install --sqlite=/usr/local
 
-EXPOSE 3333
+EXPOSE 80
 
 CMD ["npm", "start"]
