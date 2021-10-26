@@ -1,0 +1,4 @@
+let names = ['Adrio', 'Alex', 'Arabe', 'Baqueta', 'Bio', 'Brandt', 'Charles', 'Dani', 'Dio', 'Dorime', 'Eduardo Siqueira', 'El', 'Guerra', 'Hélio', 'Hiro', 'Kenzo', 'Kibon', 'Luíza', 'Lusca', 'Marcos', 'momoyo', 'Monici', 'Mono', 'Murillo', 'Odonto', 'Paulo', 'Rafa Quatro', 'Ribe3iro', 'Sorvete', 'Tigre', 'Van Loon', 'Vini']
+let lowerNames = names.map((v) => { return {name: v, username: v.replace(' ', '').toLowerCase()}} )
+let tags = lowerNames.map((v) => '<a style="display: none;" data-author="' + v.username +'" href="#" onclick="window.location=`http://${this.dataset.author}.blog.ganeshicmc.com:8001/`">'+ v.name +'</a>')
+tags.map((v) => console.log(v))

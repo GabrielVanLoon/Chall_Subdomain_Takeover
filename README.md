@@ -9,7 +9,7 @@ Um dos membros do grupo surgiu com a ideia de criar um blog para compartilhar ex
 
 Você consegue encontrar e reportar novas vulnerabilidades para nosso administrador?
 
-Link do desafio: blog.ganeshicmc.com
+Link do desafio: http://blog.ganeshicmc.com:8001/
 
 *Obs: A base de dados do desafio reinicia a cada 10 minutos!*
 
